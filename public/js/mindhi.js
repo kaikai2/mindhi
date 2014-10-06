@@ -1,5 +1,15 @@
 var app = angular.module('mindhi', ['ngRoute']);
 
+app.controller('MainCtrl', function($scope, $route, $routeParams) {
+	$scope.cur = {
+		text: '',
+		act: '',
+		face: '',
+		bg: '#000',
+	};
+});
+
+
 app.controller('CoverCtrl', function($scope, $route, $routeParams) {
 	$scope.name = "BookController";
 	$scope.params = $routeParams;
