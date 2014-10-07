@@ -6,6 +6,7 @@
                 <File name="public\css\bootstrap-theme.min.css" />
                 <File name="public\css\bootstrap.css" />
                 <File name="public\css\bootstrap.min.css" />
+                <File name="public\css\mindhi.css" />
             </Folder>
             <Folder name="img">
                 <File name="public\img\1.jpg" />
@@ -80,15 +81,19 @@
                 <File name="public\js\angular.min.js" />
                 <File name="public\js\angular.min.js.map" />
                 <File name="public\js\app.js" />
-                <File name="public\js\app.js~" />
                 <File name="public\js\bootstrap.min.js" />
                 <File name="public\js\imglist.js" />
-                <File name="public\js\imglist.js~" />
                 <File name="public\js\ui-bootstrap-tpls-0.11.0.min.js" />
+                <File name="public\js\mindhi.js" />
             </Folder>
-            <File name="public\file~" />
             <File name="public\index.html" />
-            <File name="public\index.html~" />
+            <File name="public\makepic.html" />
+            <File name="public\makepic_select_action.html" />
+            <File name="public\makepic_select_background.html" />
+            <File name="public\makepic_select_face.html" />
+            <File name="public\makepic_select_text.html" />
+            <File name="public\cover.html" />
+            <File name="public\publish.html" />
         </Folder>
         <File name=".gitignore" />
         <File name="index.js" />

@@ -1,0 +1,15 @@
+<!--    <canvas id="target" width="240px" height="300px"/>
+-->
+<div class="row">
+  <div data-draggable-canvas data-kinetic-obj="false" ng-kinetic-stage-obj="false" ng-isdraggable="true" id="canvas">&nbsp;
+  </div>
+</div>
+
+选择表情
+<div class="row">
+  <div class="col-xs-6 col-md-3" ng-repeat="emotion in emotions">
+	<a href="#" class="thumbnail">
+	  <img ng-src="{{emotion.image}}" alt="{{emotion.text}}">
+	</a>
+  </div>
+</div>

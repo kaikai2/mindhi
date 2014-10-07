@@ -15,3 +15,7 @@
 body {
 	overflow-y: hidden;
 }
+
+.pickRange {
+	position: absolute;
+}
