@@ -59,18 +59,16 @@ app.controller('CoverCtrl', ['$scope', '$window', '$route', function($scope, $wi
 app.controller('MakePicSelectActionCtrl', ['$scope', '$window', '$route', function($scope, $window, $route, $routeParams) {
 
 	var g_imglist = [
-		"/img/face/19.png",
-		"/img/face/4.png",
-		"/img/face/2.png",
-		
-		"/img/face/6.png",
-		"/img/face/11.png",
-		"/img/face/12.png",
-		
-		"/img/face/27.png",
-		"/img/face/34.png",
-		"/img/face/45.png",
-		
+		"/img/body/body-1.png",
+		"/img/body/body-2.png",
+		"/img/body/body-3.png",
+		"/img/body/body-4.png",
+		"/img/body/body-5.png",
+		"/img/body/body-6.png",
+		"/img/body/body-7.png",
+		"/img/body/body-8.png",
+		"/img/body/body-9.png",
+
 	];
     $scope.actions = [];
     for(var i = 0; i < g_imglist.length; i++){
@@ -105,18 +103,37 @@ app.controller('MakePicSelectBackgroundCtrl', function($scope, $route, $routePar
 
 app.controller('MakePicSelectFaceCtrl', function($scope, $route, $routeParams) {
 	var g_imglist = [
-		"/img/face/19.png",
-		"/img/face/4.png",
-		"/img/face/2.png",
+		"/img/face/face-1.png",
+		"/img/face/face-2.png",
+		"/img/face/face-3.png",
+		"/img/face/face-4.png",
+		"/img/face/face-5.png",
+		"/img/face/face-6.png",
+		"/img/face/face-7.png",
+		"/img/face/face-8.png",
+		"/img/face/face-9.png",
+		"/img/face/face-10.png",
 		
-		"/img/face/6.png",
-		"/img/face/11.png",
-		"/img/face/12.png",
-		
-		"/img/face/27.png",
-		"/img/face/34.png",
-		"/img/face/45.png",
-		
+		"/img/face/face-11.png",
+		"/img/face/face-12.png",
+		"/img/face/face-13.png",
+		"/img/face/face-14.png",
+		"/img/face/face-15.png",
+		"/img/face/face-16.png",
+		"/img/face/face-17.png",
+		"/img/face/face-18.png",
+		"/img/face/face-19.png",
+		"/img/face/face-20.png",
+		"/img/face/face-21.png",
+		"/img/face/face-22.png",
+		"/img/face/face-23.png",
+		"/img/face/face-24.png",
+		"/img/face/face-25.png",
+		"/img/face/face-26.png",
+		"/img/face/face-27.png",
+		"/img/face/face-28.png",
+		"/img/face/face-29.png",
+		"/img/face/face-30.png",
 	];
     $scope.faces = [];
     for(var i = 0; i < g_imglist.length; i++){
@@ -169,14 +186,18 @@ app.controller('PublishCtrl', ['$scope', '$window', function($scope, $window) {
 		canvases.attr({width: width, height: height});
 		//canvases.height(height);
 		var context = canvas.getContext('2d');
-		
+		function drawImage(context, img, x, y, scaleWidth){
+			var imgShowWidth = scaleWidth;
+			var imgShowHeight = imgShowWidth * img.height / img.width;
+			context.drawImage(img, x, y, imgShowWidth, imgShowHeight);
+		}
 		for (var i = 0; i < $scope.pic.length; i++){
 			(function(pic, baseY, width, height){
 				var sources = {
-					act1: pic.role[0].act || 'img/face/1.png',
-					face1: pic.role[0].face || 'img/face/1.png',
-					act2: pic.role[1].act || 'img/face/1.png',
-					face2: pic.role[1].face || 'img/face/1.png',
+					act1: pic.role[0].act || 'img/body/body-1.png',
+					face1: pic.role[0].face || 'img/face/face-1.png',
+					act2: pic.role[1].act || 'img/body/body-2.png',
+					face2: pic.role[1].face || 'img/face/face-2.png',
 				};
 				loadImages(sources, function(images){
 					context.beginPath();
@@ -185,8 +206,8 @@ app.controller('PublishCtrl', ['$scope', '$window', function($scope, $window) {
 					context.fill();
 					
 					// role 2
-					context.drawImage(images.act1, 0.7 * width, 0.45 * height + baseY);
-					context.drawImage(images.face2, 0.7 * width, 0.15 * height + baseY);
+					drawImage(context, images.act1, 0.7 * width, 0.45 * height + baseY, 0.3 * width);
+					drawImage(context, images.face2, 0.7 * width, 0.15 * height + baseY, 0.3 * width);
 					
 					context.beginPath();
 					
@@ -212,8 +233,8 @@ app.controller('PublishCtrl', ['$scope', '$window', function($scope, $window) {
 					context.stroke();
 	  
 					// role 1
-					context.drawImage(images.act1, 0.05 * width, 0.55 * height + baseY);
-					context.drawImage(images.face1, 0.05 * width, 0.3 * height + baseY);
+					drawImage(context, images.act1, 0.05 * width, 0.55 * height + baseY, 0.3 * width);
+					drawImage(context, images.face1, 0.05 * width, 0.3 * height + baseY, 0.3 * width);
 
 					context.fillStyle = 'black';
 					context.fillText(pic.text, 100,100 + baseY);
