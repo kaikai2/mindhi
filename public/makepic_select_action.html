@@ -1,14 +1,19 @@
-<div class="bg">
+<div class="bg text-center">
 
 选择动作
 <hr/>
-
-<div ng-repeat="action in actions">
+<div class="container">
+	<div class="row">
+		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" ng-repeat="action in actions">
+			<a href="#" class="thumbnail {{cur.act == action.name?'active':''}}" ng-click="select(action)">
+				<img class="img-rounded" ng-src="{{action.image}}" alt="{{action.text}}">
+			</a>
+		</div>
+	</div>
 </div>
-
 <hr/>
 
-<a class="btn btn-default" href="/makepic_select_text">选定</a>
+<a class="btn btn-default {{cur.act?'':'disabled'}}" href="/makepic_select_text">选定</a>
 
 
 </div>

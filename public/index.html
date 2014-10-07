@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html ng-app="mindhi">
 <head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/mindhi.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/farbtastic.css" type="text/css" />
 </head>
-<body class="full-screen" ng-controller="MainCtrl">
+<body class="full-screen" ng-controller="MainCtrl" ng-click="return false;">
 	<div ng-view class="full-screen"></div>
 	
 	<script src="js/angular.js"></script>
 	<script src="js/angular-route.min.js"></script>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
 	
 	<script src="//cdnjs.cloudflare.com/ajax/libs/kineticjs/5.0.6/kinetic.min.js"></script>
 
 	<script src="js/imglist.js"></script>
 	<script src="js/mindhi.js"></script>
+	<script type="text/javascript" src="js/farbtastic.js"></script>
 </body>
 </html>

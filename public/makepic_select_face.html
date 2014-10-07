@@ -1,14 +1,19 @@
-<div class="bg">
+<div class="bg text-center">
 
 选择表情
 <hr/>
-
-<input ng-model="cur.text" />
-
+<div class="container">
+	<div class="row">
+		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" ng-repeat="face in faces">
+			<a href="#" class="thumbnail {{cur.face == face.name?'active':''}}" ng-click="select(face)">
+				<img class="img-rounded" ng-src="{{face.image}}" alt="{{face.text}}">
+			</a>
+		</div>
+	</div>
+</div>
 <hr/>
 
-<a class="btn btn-default" href="/publish">选定</a>
+<a class="btn btn-default {{cur.act?'':'disabled'}}" href="/publish">选定</a>
 <a class="btn btn-default" href="javascript:history.back()">上一步</a>
-
 
 </div>

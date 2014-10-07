@@ -11,3 +11,7 @@
 	bottom: 0;
 	position: absolute;
 }
+
+body {
+	overflow-y: hidden;
+}
