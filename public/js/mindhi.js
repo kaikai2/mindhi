@@ -42,10 +42,10 @@ app.controller('MainCtrl', function($scope, $route, $routeParams) {
 			}
 			var role = pic.role[roleIndex];
 			if ('act' in values){
-				pic.act = values.act;
+				role.act = values.act;
 			}
 			if ('face' in values){
-				pic.face = values.face;
+				role.face = values.face;
 			}
 		}
 	};
@@ -56,7 +56,7 @@ app.controller('CoverCtrl', ['$scope', '$window', '$route', function($scope, $wi
 
 }]);
 
-app.controller('MakePicSelectActionCtrl', ['$scope', '$window', '$route', function($scope, $window, $route, $routeParams) {
+app.controller('MakePicSelectActionCtrl', ['$scope', '$window', '$route', '$routeParams', function($scope, $window, $route, $routeParams) {
 
 	var g_imglist = [
 		"/img/body/body-1.png",
@@ -206,7 +206,7 @@ app.controller('PublishCtrl', ['$scope', '$window', function($scope, $window) {
 					context.fill();
 					
 					// role 2
-					drawImage(context, images.act1, 0.7 * width, 0.45 * height + baseY, 0.3 * width);
+					drawImage(context, images.act2, 0.7 * width, 0.4 * height + baseY, 0.3 * width);
 					drawImage(context, images.face2, 0.7 * width, 0.15 * height + baseY, 0.3 * width);
 					
 					context.beginPath();
@@ -233,8 +233,8 @@ app.controller('PublishCtrl', ['$scope', '$window', function($scope, $window) {
 					context.stroke();
 	  
 					// role 1
-					drawImage(context, images.act1, 0.05 * width, 0.55 * height + baseY, 0.3 * width);
-					drawImage(context, images.face1, 0.05 * width, 0.3 * height + baseY, 0.3 * width);
+					drawImage(context, images.act1, 0.05 * width, 0.7 * height + baseY, 0.3 * width);
+					drawImage(context, images.face1, 0.05 * width, 0.45 * height + baseY, 0.3 * width);
 
 					context.fillStyle = 'black';
 					context.fillText(pic.text, 100,100 + baseY);
