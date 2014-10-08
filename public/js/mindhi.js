@@ -177,19 +177,22 @@ function loadImages(sources, callback) {
 	}
 }
 app.controller('PublishCtrl', ['$scope', '$window', function($scope, $window) {
-	var width = $window.$(document).width() * 0.8;
+	var width = $window.screen.availWidth * 0.8;
 	var height = width * 3 / 2;
 	var canvases = $window.$('#myCanvas');
+	$scope.width = parseInt(width);
+	$scope.height = parseInt(height);
 	if (canvases.length > 0){
 		var canvas = canvases[0];
-		//canvases.width(width);
-		canvases.attr({width: width, height: height});
-		//canvases.height(height);
+		//canvases.attr({width: width, height: height});
 		var context = canvas.getContext('2d');
 		function drawImage(context, img, x, y, scaleWidth){
 			var imgShowWidth = scaleWidth;
 			var imgShowHeight = imgShowWidth * img.height / img.width;
-			context.drawImage(img, x, y, imgShowWidth, imgShowHeight);
+			context.drawImage(img, parseInt(x), parseInt(y), parseInt(imgShowWidth), parseInt(imgShowHeight));
+		}
+		function coord(x,y,r){
+			return [parseInt(x),parseInt(y),parseInt(r)].join(',');
 		}
 		for (var i = 0; i < $scope.pic.length; i++){
 			(function(pic, baseY, width, height){
@@ -199,16 +202,21 @@ app.controller('PublishCtrl', ['$scope', '$window', function($scope, $window) {
 					act2: pic.role[1].act || 'img/body/body-2.png',
 					face2: pic.role[1].face || 'img/face/face-2.png',
 				};
+				pic.act1_pos = coord(0.7 * width, 0.4 * height + baseY, 0.3 * width);
+				pic.face1_pos = coord(0.7 * width, 0.15 * height + baseY, 0.3 * width);
+				pic.act0_pos = coord(0.05 * width, 0.7 * height + baseY, 0.3 * width);
+				pic.face0_pos = coord(0.05 * width, 0.45 * height + baseY, 0.3 * width);
+				pic.text_pos = coord(0.5 * width, 0.4 * height + baseY, 0.3 * width);
+				pic.bg_pos = [0, width, baseY, baseY + height].join(',');
 				loadImages(sources, function(images){
 					context.beginPath();
 					context.rect(0, baseY, width, height);
 					context.fillStyle = pic.bg;
 					context.fill();
 					
-					// role 2
+					// role 1
 					drawImage(context, images.act2, 0.7 * width, 0.4 * height + baseY, 0.3 * width);
 					drawImage(context, images.face2, 0.7 * width, 0.15 * height + baseY, 0.3 * width);
-					
 					context.beginPath();
 					
 					context.moveTo(0.2 * width, 0.4 * height + baseY);
@@ -232,14 +240,14 @@ app.controller('PublishCtrl', ['$scope', '$window', function($scope, $window) {
 					context.strokeStyle = 'black';
 					context.stroke();
 	  
-					// role 1
+					// role 0
 					drawImage(context, images.act1, 0.05 * width, 0.7 * height + baseY, 0.3 * width);
 					drawImage(context, images.face1, 0.05 * width, 0.45 * height + baseY, 0.3 * width);
-
+		
 					context.fillStyle = 'black';
 					context.fillText(pic.text, 100,100 + baseY);
 				});
-			})($scope.pic[i], i * height / 2, width, height / 2);
+			})($scope.pic[i], parseInt(i * height / 2), width, parseInt(height / 2));
 		}
 	}
 }]);
@@ -251,8 +259,8 @@ app.config(function($routeProvider, $locationProvider) {
 		when('/makepic_select_background/:picIndex', {templateUrl: '/makepic_select_background.html',   controller: 'MakePicSelectBackgroundCtrl'}).
 		when('/makepic_select_text/:picIndex', {templateUrl: '/makepic_select_text.html',   controller: 'MakePicSelectTextCtrl'}).
 		when('/makepic_select_action/:picIndex/:roleIndex', {templateUrl: '/makepic_select_action.html',   controller: 'MakePicSelectActionCtrl'}).
-		when('/makepic_select_face/:picIndex/:roleIndex', {templateUrl: '/makepic_select_face.html',   controller: 'MakePicSelectFaceCtrl'}).
-		otherwise({redirectTo: '/'});
+		when('/makepic_select_face/:picIndex/:roleIndex', {templateUrl: '/makepic_select_face.html',   controller: 'MakePicSelectFaceCtrl'})
+		//otherwise({redirectTo: '/'});
 
 	// configure html5 to get links working on jsfiddle
 	$locationProvider.html5Mode(true);

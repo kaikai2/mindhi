@@ -1,9 +1,21 @@
-<div class="bg text-center">
+<div class="bg">
 发布！
 <hr/>
 
-<div class="pickRange">
-	<canvas id="myCanvas" class="img-thumbnail" ></canvas>
+<div class="pickRange img-thumbnail">
+	<canvas id="myCanvas" class="overlay" width="{{width}}" height="{{height}}"></canvas>
+	<img class="overlay" usemap="#map" width="{{width}}" height="{{height}}"/>
+	<map name="map">
+		<area ng-repeat-start="p in pic track by $index"
+		shape="circle" coords="{{p.text_pos}}"  href="/makepic_select_text/{{$index}}" alt="修改文字">
+		<area shape="circle" coords="{{p.act0_pos}}"  href="/makepic_select_action/{{$index}}/0" alt="更换动作">
+		<area shape="circle" coords="{{p.face0_pos}}" href="/makepic_select_face/{{$index}}/0" alt="更换表情">
+		<area shape="circle" coords="{{p.act1_pos}}"  href="/makepic_select_action/{{$index}}/1" alt="更换动作">
+		<area ng-repeat-end shape="circle" coords="{{p.face1_pos}}" href="/makepic_select_face/{{$index}}/1" alt="更换表情">
+
+		<area ng-repeat="p in pic track by $index" 
+			shape="rect" coords="{{p.bg_pos}}" href="/makepic_select_background/{{$index}}" alt="更换背景色">
+	</map>
 	<div class="overlay">
 		<a href="/makepic_select_background/0">更换背景色</a>
 		<a href="/makepic_select_text/0">修改文字</a>

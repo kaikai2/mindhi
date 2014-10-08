@@ -18,4 +18,11 @@ body {
 
 .pickRange {
 	position: absolute;
+	left: 0px;
+	right: 0px;
+}
+
+.overlay {
+	position: absolute;
+	border: 1px solid red;
 }
