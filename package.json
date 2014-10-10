@@ -1,0 +1,30 @@
+{
+  "name": "mindhi",
+  "description": "mind hi",
+  "version": "0.0.1",
+  "author": {
+    "name": "kaikai",
+    "email": "zikaizhang@gmail.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "4.9.6",
+    "serve-static": "1.6.4"
+  },
+  "devDependencies": {
+  },
+  "files": [
+    "LICENSE",
+    "HISTORY.md",
+    "index.js"
+  ],
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+  },
+  "readme": "",
+  "readmeFilename": "README.md",
+  "bugs": {
+  },
+}
