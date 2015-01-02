@@ -22,9 +22,10 @@
     "node": ">= 0.8.0"
   },
   "scripts": {
+      "start": "node index.js"
   },
   "readme": "",
   "readmeFilename": "README.md",
   "bugs": {
-  },
+  }
 }

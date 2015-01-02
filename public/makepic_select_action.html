@@ -1,6 +1,6 @@
 <div class="bg text-center">
 
-选择动作
+选择动作{{$routeParams.picIndex}}-{{$routeParams.roleIndex}}
 <hr/>
 <div class="container">
 	<div class="row">
@@ -14,6 +14,7 @@
 <hr/>
 
 <a class="btn btn-default {{cur.act?'':'disabled'}}" href="/publish" ng-click="done()">选定</a>
+<a class="btn btn-default" href="javascript:history.back()">上一步</a>
 
 
 </div>

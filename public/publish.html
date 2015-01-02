@@ -1,38 +1,25 @@
 <div class="bg">
 发布！
 <hr/>
-
+<div class="container">
+    <div class="row">
 <div class="pickRange img-thumbnail">
-	<canvas id="myCanvas" class="overlay" width="{{width}}" height="{{height}}"></canvas>
 	<img class="overlay" usemap="#map" width="{{width}}" height="{{height}}"/>
+    <canvas id="myCanvas" class="" width="{{width}}" height="{{height}}"></canvas>
 	<map name="map">
-		<area ng-repeat-start="p in pic track by $index"
-		shape="circle" coords="{{p.text_pos}}"  href="/makepic_select_text/{{$index}}" alt="修改文字">
-		<area shape="circle" coords="{{p.act0_pos}}"  href="/makepic_select_action/{{$index}}/0" alt="更换动作">
-		<area shape="circle" coords="{{p.face0_pos}}" href="/makepic_select_face/{{$index}}/0" alt="更换表情">
-		<area shape="circle" coords="{{p.act1_pos}}"  href="/makepic_select_action/{{$index}}/1" alt="更换动作">
-		<area ng-repeat-end shape="circle" coords="{{p.face1_pos}}" href="/makepic_select_face/{{$index}}/1" alt="更换表情">
+		<area class="area" ng-repeat-start="p in pic track by $index"
+		shape="circle" coords="{{p.text_pos}}" href="javascript:select_text({{$index}})" alt="修改文字">
+		<area class="area" shape="circle" coords="{{p.face0_pos}}" href="javascript:select_face({{$index}},0)" alt="更换表情">
+		<area class="area" shape="circle" coords="{{p.act0_pos}}"  href="javascript:select_action({{$index}},0)" alt="更换动作">
+		<area class="area" shape="circle" coords="{{p.face1_pos}}" href="javascript:select_face({{$index}},1)" alt="更换表情">
+		<area class="area" ng-repeat-end shape="circle" coords="{{p.act1_pos}}"  href="javascript:select_action({{$index}},1)" alt="更换动作">
 
-		<area ng-repeat="p in pic track by $index" 
-			shape="rect" coords="{{p.bg_pos}}" href="/makepic_select_background/{{$index}}" alt="更换背景色">
+		<area class="area" ng-repeat="p in pic track by $index" 
+			shape="rect" coords="{{p.bg_pos}}" href="javascript:select_background({{$index}})" alt="更换背景色">
 	</map>
-	<div class="overlay">
-		<a href="/makepic_select_background/0">更换背景色</a>
-		<a href="/makepic_select_text/0">修改文字</a>
-		<a href="/makepic_select_action/0/0">更换动作</a>
-		<a href="/makepic_select_face/0/0">更换表情</a>
-		<a href="/makepic_select_action/0/1">更换动作</a>
-		<a href="/makepic_select_face/0/1">更换表情</a>
-		
-		<a href="/makepic_select_background/1">更换背景色</a>
-		<a href="/makepic_select_text/1">修改文字</a>
-		<a href="/makepic_select_action/1/0">更换动作</a>
-		<a href="/makepic_select_face/1/0">更换表情</a>
-		<a href="/makepic_select_action/1/1">更换动作</a>
-		<a href="/makepic_select_face/1/1">更换表情</a>
-	</div>
 </div>
-
+    </div>
+    </div>
 <hr/>
 太棒了！你的作品完成啦！
 <br/>

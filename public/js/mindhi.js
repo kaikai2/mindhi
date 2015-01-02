@@ -22,12 +22,35 @@ app.controller('MainCtrl', function($scope, $route, $routeParams) {
 			face: '',
 		}],
 	}];
-	
-	$scope.save = function(routeParams, values){
-		var picIndex = routeParams.picIndex;
+	$scope.getPicIndex = function(routeParams){
+    	var picIndex = routeParams.picIndex;
 		if (picIndex >= $scope.pic.length){
 			picIndex = $scope.pic.length - 1;
 		}
+        return picIndex;
+    };
+	$scope.getRoleIndex = function(routeParams){
+        var roleIndex = routeParams.roleIndex;
+        return roleIndex;
+    };
+    $scope.getAction = function(routeParams){
+        var pic = $scope.pic[$scope.getPicIndex(routeParams)];
+        return pic.role[$scope.getRoleIndex(routeParams)].act;
+    };
+    $scope.getFace = function(routeParams){
+        var pic = $scope.pic[$scope.getPicIndex(routeParams)];
+        return pic.role[$scope.getRoleIndex(routeParams)].face;
+    };
+    $scope.getText = function(routeParams){
+        var pic = $scope.pic[$scope.getPicIndex(routeParams)];
+        return pic.text;
+    };
+    $scope.getBg = function(routeParams){
+        var pic = $scope.pic[$scope.getPicIndex(routeParams)];
+        return pic.bg;
+    };
+	$scope.save = function(routeParams, values){
+        var picIndex = $scope.getPicIndex(routeParams);
 		var pic = $scope.pic[picIndex];
 		if ('text' in values){
 			pic.text = values.text;
@@ -36,10 +59,10 @@ app.controller('MainCtrl', function($scope, $route, $routeParams) {
 			pic.bg = values.bg;
 		}
 		if ('roleIndex' in routeParams){
-			var roleIndex = routeParams.roleIndex;
-			if (roleIndex >= pic.role.length){
-				roleIndex = pic.role.length - 1;
-			}
+            var roleIndex = $scope.getRoleIndex(routeParams);
+            if (roleIndex >= pic.role.length){
+                roleIndex = pic.role.length - 1;
+            }
 			var role = pic.role[roleIndex];
 			if ('act' in values){
 				role.act = values.act;
@@ -52,12 +75,12 @@ app.controller('MainCtrl', function($scope, $route, $routeParams) {
 });
 
 
-app.controller('CoverCtrl', ['$scope', '$window', '$route', function($scope, $window$route, $routeParams) {
+app.controller('CoverCtrl', function($scope, $window$route, $routeParams) {
 
-}]);
+});
 
-app.controller('MakePicSelectActionCtrl', ['$scope', '$window', '$route', '$routeParams', function($scope, $window, $route, $routeParams) {
-
+app.controller('MakePicSelectActionCtrl', function($scope, $window, $route, $routeParams) {
+    $scope.$routeParams = $routeParams;
 	var g_imglist = [
 		"/img/body/body-1.png",
 		"/img/body/body-2.png",
@@ -77,18 +100,18 @@ app.controller('MakePicSelectActionCtrl', ['$scope', '$window', '$route', '$rout
             image: g_imglist[i],
         });
     }
-	$scope.cur = {};
+	$scope.cur = {act: $scope.getAction($routeParams) };
 	$scope.select = function(action){
 		$scope.cur.act = action.name;
 	};
 	$scope.done = function(){
 		$scope.save($routeParams, {act: $scope.cur.act});
 	};
-}]);
+});
 
 app.controller('MakePicSelectBackgroundCtrl', function($scope, $route, $routeParams) {
-
-	$scope.cur = {};
+    $scope.$routeParams = $routeParams;
+	$scope.cur = {bg: $scope.getBg($routeParams)};
 	
 	$(document).ready(function() {
 		$('#colorpicker').farbtastic(function(color){
@@ -102,6 +125,7 @@ app.controller('MakePicSelectBackgroundCtrl', function($scope, $route, $routePar
 
 
 app.controller('MakePicSelectFaceCtrl', function($scope, $route, $routeParams) {
+    $scope.$routeParams = $routeParams;
 	var g_imglist = [
 		"/img/face/face-1.png",
 		"/img/face/face-2.png",
@@ -142,7 +166,7 @@ app.controller('MakePicSelectFaceCtrl', function($scope, $route, $routeParams) {
             image: g_imglist[i],
         });
     }
-	$scope.cur = {};
+	$scope.cur = {face: $scope.getFace($routeParams)};
 	$scope.select = function(action){
 		$scope.cur.face = action.name;
 	};
@@ -152,7 +176,8 @@ app.controller('MakePicSelectFaceCtrl', function($scope, $route, $routeParams) {
 });
 
 app.controller('MakePicSelectTextCtrl', function($scope, $route, $routeParams) {
-	$scope.cur = {};
+	$scope.$routeParams = $routeParams;
+    $scope.cur = {text: $scope.getText($routeParams)};
 	$scope.done = function(){
 		$scope.save($routeParams, {text: $scope.cur.text});
 	};
@@ -176,10 +201,36 @@ function loadImages(sources, callback) {
 		images[src].src = sources[src];
 	}
 }
-app.controller('PublishCtrl', ['$scope', '$window', function($scope, $window) {
-	var width = $window.screen.availWidth * 0.8;
-	var height = width * 3 / 2;
-	var canvases = $window.$('#myCanvas');
+app.controller('PublishCtrl', function($scope, $window, $location, $route) {
+    
+    window.select_text = function(picIndex){
+        $location.path('/makepic_select_text/' + picIndex);
+        $route.reload();
+    };
+    window.select_action = function(picIndex, roleIndex){
+        $location.path('/makepic_select_action/' + picIndex + '/' + roleIndex);
+        $route.reload();
+    };
+    window.select_face = function(picIndex, roleIndex){
+        $location.path('/makepic_select_face/' + picIndex + '/' + roleIndex);
+        $route.reload();
+    };
+    window.select_background = function(picIndex){
+        $location.path('/makepic_select_background/' + picIndex);
+        $route.reload();
+    };
+    
+	var maxWidth = $window.screen.availWidth * 0.8;
+	var maxHeight = $window.screen.availHeight * 0.8;
+	var width, height;
+    if (maxWidth * 3 / 2 < maxHeight){
+        width = maxWidth;
+        height = maxWidth * 3 / 2;
+    } else {
+        width = maxHeight * 2 / 3;
+        height = maxHeight;
+    }
+    var canvases = $window.$('#myCanvas');
 	$scope.width = parseInt(width);
 	$scope.height = parseInt(height);
 	if (canvases.length > 0){
@@ -192,7 +243,7 @@ app.controller('PublishCtrl', ['$scope', '$window', function($scope, $window) {
 			context.drawImage(img, parseInt(x), parseInt(y), parseInt(imgShowWidth), parseInt(imgShowHeight));
 		}
 		function coord(x,y,r){
-			return [parseInt(x),parseInt(y),parseInt(r)].join(',');
+			return [parseInt(x + r/2),parseInt(y + r/2),parseInt(r/2)].join(',');
 		}
 		for (var i = 0; i < $scope.pic.length; i++){
 			(function(pic, baseY, width, height){
@@ -206,7 +257,7 @@ app.controller('PublishCtrl', ['$scope', '$window', function($scope, $window) {
 				pic.face1_pos = coord(0.7 * width, 0.15 * height + baseY, 0.3 * width);
 				pic.act0_pos = coord(0.05 * width, 0.7 * height + baseY, 0.3 * width);
 				pic.face0_pos = coord(0.05 * width, 0.45 * height + baseY, 0.3 * width);
-				pic.text_pos = coord(0.5 * width, 0.4 * height + baseY, 0.3 * width);
+				pic.text_pos = coord(0.25 * width, 0.3 * height + baseY, 0.5 * width);
 				pic.bg_pos = [0, width, baseY, baseY + height].join(',');
 				loadImages(sources, function(images){
 					context.beginPath();
@@ -245,22 +296,41 @@ app.controller('PublishCtrl', ['$scope', '$window', function($scope, $window) {
 					drawImage(context, images.face1, 0.05 * width, 0.45 * height + baseY, 0.3 * width);
 		
 					context.fillStyle = 'black';
-					context.fillText(pic.text, 100,100 + baseY);
+					context.fillText(pic.text, 0.25 * width, 0.3 * height + baseY, 0.5* width);
 				});
 			})($scope.pic[i], parseInt(i * height / 2), width, parseInt(height / 2));
 		}
 	}
-}]);
+});
 
 app.config(function($routeProvider, $locationProvider) {
 	$routeProvider.
-		when('/', {templateUrl: '/cover.html',   controller: 'CoverCtrl'}).
-		when('/publish', {templateUrl: '/publish.html',   controller: 'PublishCtrl'}).
-		when('/makepic_select_background/:picIndex', {templateUrl: '/makepic_select_background.html',   controller: 'MakePicSelectBackgroundCtrl'}).
-		when('/makepic_select_text/:picIndex', {templateUrl: '/makepic_select_text.html',   controller: 'MakePicSelectTextCtrl'}).
-		when('/makepic_select_action/:picIndex/:roleIndex', {templateUrl: '/makepic_select_action.html',   controller: 'MakePicSelectActionCtrl'}).
-		when('/makepic_select_face/:picIndex/:roleIndex', {templateUrl: '/makepic_select_face.html',   controller: 'MakePicSelectFaceCtrl'})
-		//otherwise({redirectTo: '/'});
+		when('/', {
+            templateUrl: '/cover.html',
+            controller: 'CoverCtrl'
+        }).
+		when('/publish', {
+            templateUrl: '/publish.html',
+            controller: 'PublishCtrl'
+        }).
+		when('/makepic_select_background/:picIndex', {
+            templateUrl: '/makepic_select_background.html', 
+            controller: 'MakePicSelectBackgroundCtrl'
+        }).
+		when('/makepic_select_text/:picIndex', {
+            templateUrl: '/makepic_select_text.html', 
+            controller: 'MakePicSelectTextCtrl'
+        }).
+		when('/makepic_select_action/:picIndex/:roleIndex', {
+            templateUrl: '/makepic_select_action.html', 
+            controller: 'MakePicSelectActionCtrl'
+        }).
+		when('/makepic_select_face/:picIndex/:roleIndex', {
+            templateUrl: '/makepic_select_face.html', 
+            controller: 'MakePicSelectFaceCtrl'
+        })
+		//.otherwise({redirectTo: '/'})
+        ;
 
 	// configure html5 to get links working on jsfiddle
 	$locationProvider.html5Mode(true);
