@@ -1,6 +1,7 @@
 var app = angular.module('mindhi', ['ngRoute']);
 
 app.controller('MainCtrl', function($scope, $route, $routeParams) {
+    $scope.basePath = location.pathname;
 	$scope.pic = [{
 		text: '',
 		bg: '#aaa',
@@ -75,29 +76,29 @@ app.controller('MainCtrl', function($scope, $route, $routeParams) {
 });
 
 
-app.controller('CoverCtrl', function($scope, $window$route, $routeParams) {
+app.controller('CoverCtrl', function($scope, $window, $route, $routeParams) {
 
 });
 
 app.controller('MakePicSelectActionCtrl', function($scope, $window, $route, $routeParams) {
     $scope.$routeParams = $routeParams;
 	var g_imglist = [
-		"/img/body/body-1.png",
-		"/img/body/body-2.png",
-		"/img/body/body-3.png",
-		"/img/body/body-4.png",
-		"/img/body/body-5.png",
-		"/img/body/body-6.png",
-		"/img/body/body-7.png",
-		"/img/body/body-8.png",
-		"/img/body/body-9.png",
+		"img/body/body-1.png",
+		"img/body/body-2.png",
+		"img/body/body-3.png",
+		"img/body/body-4.png",
+		"img/body/body-5.png",
+		"img/body/body-6.png",
+		"img/body/body-7.png",
+		"img/body/body-8.png",
+		"img/body/body-9.png",
 
 	];
     $scope.actions = [];
     for(var i = 0; i < g_imglist.length; i++){
         $scope.actions.push({
             name: g_imglist[i],
-            image: g_imglist[i],
+            image: $scope.basePath + g_imglist[i],
         });
     }
 	$scope.cur = {act: $scope.getAction($routeParams) };
@@ -127,43 +128,43 @@ app.controller('MakePicSelectBackgroundCtrl', function($scope, $route, $routePar
 app.controller('MakePicSelectFaceCtrl', function($scope, $route, $routeParams) {
     $scope.$routeParams = $routeParams;
 	var g_imglist = [
-		"/img/face/face-1.png",
-		"/img/face/face-2.png",
-		"/img/face/face-3.png",
-		"/img/face/face-4.png",
-		"/img/face/face-5.png",
-		"/img/face/face-6.png",
-		"/img/face/face-7.png",
-		"/img/face/face-8.png",
-		"/img/face/face-9.png",
-		"/img/face/face-10.png",
-		
-		"/img/face/face-11.png",
-		"/img/face/face-12.png",
-		"/img/face/face-13.png",
-		"/img/face/face-14.png",
-		"/img/face/face-15.png",
-		"/img/face/face-16.png",
-		"/img/face/face-17.png",
-		"/img/face/face-18.png",
-		"/img/face/face-19.png",
-		"/img/face/face-20.png",
-		"/img/face/face-21.png",
-		"/img/face/face-22.png",
-		"/img/face/face-23.png",
-		"/img/face/face-24.png",
-		"/img/face/face-25.png",
-		"/img/face/face-26.png",
-		"/img/face/face-27.png",
-		"/img/face/face-28.png",
-		"/img/face/face-29.png",
-		"/img/face/face-30.png",
+		"img/face/face-1.png",
+		"img/face/face-2.png",
+		"img/face/face-3.png",
+		"img/face/face-4.png",
+		"img/face/face-5.png",
+		"img/face/face-6.png",
+		"img/face/face-7.png",
+		"img/face/face-8.png",
+		"img/face/face-9.png",
+		"img/face/face-10.png",
+	
+		"img/face/face-11.png",
+		"img/face/face-12.png",
+		"img/face/face-13.png",
+		"img/face/face-14.png",
+		"img/face/face-15.png",
+		"img/face/face-16.png",
+		"img/face/face-17.png",
+		"img/face/face-18.png",
+		"img/face/face-19.png",
+		"img/face/face-20.png",
+		"img/face/face-21.png",
+		"img/face/face-22.png",
+		"img/face/face-23.png",
+		"img/face/face-24.png",
+		"img/face/face-25.png",
+		"img/face/face-26.png",
+		"img/face/face-27.png",
+		"img/face/face-28.png",
+		"img/face/face-29.png",
+		"img/face/face-30.png",
 	];
     $scope.faces = [];
     for(var i = 0; i < g_imglist.length; i++){
         $scope.faces.push({
             name: g_imglist[i],
-            image: g_imglist[i],
+            image: $scope.basePath + g_imglist[i],
         });
     }
 	$scope.cur = {face: $scope.getFace($routeParams)};
@@ -204,19 +205,19 @@ function loadImages(sources, callback) {
 app.controller('PublishCtrl', function($scope, $window, $location, $route) {
     
     window.select_text = function(picIndex){
-        $location.path('/makepic_select_text/' + picIndex);
+        $location.path($scope.basePath + 'makepic_select_text/' + picIndex);
         $route.reload();
     };
     window.select_action = function(picIndex, roleIndex){
-        $location.path('/makepic_select_action/' + picIndex + '/' + roleIndex);
+        $location.path($scope.basePath + 'makepic_select_action/' + picIndex + '/' + roleIndex);
         $route.reload();
     };
     window.select_face = function(picIndex, roleIndex){
-        $location.path('/makepic_select_face/' + picIndex + '/' + roleIndex);
+        $location.path($scope.basePath + 'makepic_select_face/' + picIndex + '/' + roleIndex);
         $route.reload();
     };
     window.select_background = function(picIndex){
-        $location.path('/makepic_select_background/' + picIndex);
+        $location.path($scope.basePath + 'makepic_select_background/' + picIndex);
         $route.reload();
     };
     
@@ -304,34 +305,36 @@ app.controller('PublishCtrl', function($scope, $window, $location, $route) {
 });
 
 app.config(function($routeProvider, $locationProvider) {
+    var basePath = location.pathname;
 	$routeProvider.
-		when('/', {
-            templateUrl: '/cover.html',
+		when(basePath, {
+            templateUrl: 'cover.html',
             controller: 'CoverCtrl'
         }).
-		when('/publish', {
-            templateUrl: '/publish.html',
+		when(basePath + 'publish', {
+            templateUrl: 'publish.html',
             controller: 'PublishCtrl'
         }).
-		when('/makepic_select_background/:picIndex', {
-            templateUrl: '/makepic_select_background.html', 
+		when(basePath + 'makepic_select_background/:picIndex', {
+            templateUrl: 'makepic_select_background.html', 
             controller: 'MakePicSelectBackgroundCtrl'
         }).
-		when('/makepic_select_text/:picIndex', {
-            templateUrl: '/makepic_select_text.html', 
+		when(basePath + 'makepic_select_text/:picIndex', {
+            templateUrl: 'makepic_select_text.html', 
             controller: 'MakePicSelectTextCtrl'
         }).
-		when('/makepic_select_action/:picIndex/:roleIndex', {
-            templateUrl: '/makepic_select_action.html', 
+		when(basePath + 'makepic_select_action/:picIndex/:roleIndex', {
+            templateUrl: 'makepic_select_action.html', 
             controller: 'MakePicSelectActionCtrl'
         }).
-		when('/makepic_select_face/:picIndex/:roleIndex', {
-            templateUrl: '/makepic_select_face.html', 
+		when(basePath + 'makepic_select_face/:picIndex/:roleIndex', {
+            templateUrl: 'makepic_select_face.html', 
             controller: 'MakePicSelectFaceCtrl'
-        })
-		//.otherwise({redirectTo: '/'})
-        ;
-
+        }).otherwise({
+            templateUrl: 'cover.html',
+            controller: 'CoverCtrl'
+        });
+    
 	// configure html5 to get links working on jsfiddle
 	$locationProvider.html5Mode(true);
 });
